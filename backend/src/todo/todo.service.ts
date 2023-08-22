@@ -1,26 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { TodoRepository } from './repo/todo.repository';
+import { Todo } from './entities/todo.entity';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class TodoService {
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  constructor(
+    @Inject(TodoRepository) private todoRepository: TodoRepository,
+    private userService: UserService,
+  ) {}
+  async create(createTodoDto: CreateTodoDto, userId: number) {
+    let todo: Todo = new Todo();
+    todo.title = createTodoDto.title;
+    todo.date = new Date().toLocaleString();
+    todo.completed = false;
+    todo.user = await this.userService.findUserById(userId);
+    return this.todoRepository.save(todo);
   }
 
-  findAll() {
-    return `This action returns all todo`;
+  findAllToDoByUserNotCompleted(userId: number) {
+    return this.todoRepository.find({
+      relations: ['user'],
+      where: { user: { id: userId }, completed: false },
+    });
+  }
+  findAllToDoByUserCompleted(userId: number) {
+    return this.todoRepository.find({
+      relations: ['user'],
+      where: { user: { id: userId }, completed: true },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`;
-  }
-
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+  update(todoId: number) {
+    return this.todoRepository.update(todoId, {
+      completed: true,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} todo`;
+    return this.todoRepository.delete(id);
   }
 }

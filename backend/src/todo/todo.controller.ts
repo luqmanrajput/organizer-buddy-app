@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+} from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -7,28 +16,30 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
-  @Post()
-  create(@Body() createTodoDto: CreateTodoDto) {
-    return this.todoService.create(createTodoDto);
+  @Post(':userId')
+  create(
+    @Param('userId') userId: number,
+    @Body(ValidationPipe) createTodoDto: CreateTodoDto,
+  ) {
+    return this.todoService.create(createTodoDto, +userId);
   }
 
-  @Get()
-  findAll() {
-    return this.todoService.findAll();
+  @Get('findAllNotCompleted/:userId')
+  findAllToDoByUserNotCompleted(@Param('userId') userId: number) {
+    return this.todoService.findAllToDoByUserNotCompleted(+userId);
+  }
+  @Get('findAllCompleted/:userId')
+  findAllToDoByUserCompleted(@Param('userId') userId: number) {
+    return this.todoService.findAllToDoByUserCompleted(+userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.todoService.findOne(+id);
+  @Patch(':todoId')
+  update(@Param('todoId') todoId: number) {
+    return this.todoService.update(+todoId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todoService.update(+id, updateTodoDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.todoService.remove(+id);
+  @Delete(':todoId')
+  remove(@Param('todoId') todoId: number) {
+    return this.todoService.remove(+todoId);
   }
 }

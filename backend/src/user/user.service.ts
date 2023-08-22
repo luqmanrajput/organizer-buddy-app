@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './repo/user.repository';
 import { User } from './entities/user.entity';
 import { Constants } from 'src/utils/constants';
@@ -22,11 +21,16 @@ export class UserService {
     return this.userRepository.find();
   }
 
+  findUserById(id: number) {
+    return this.userRepository.findOneOrFail({ where: { id } });
+  }
+
   findUserByEmail(email: string) {
     return this.userRepository.findOneOrFail({ where: { email } });
   }
 
   remove(id: number) {
+    console.log('test');
     return this.userRepository.delete(id);
   }
 }
