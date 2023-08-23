@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const token: string = "";
 let custom_axios = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {

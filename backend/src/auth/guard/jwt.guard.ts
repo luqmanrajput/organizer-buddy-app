@@ -1,6 +1,5 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Observable } from 'rxjs';
 import { Constants } from 'src/utils/constants';
 import { Request } from 'express';
 

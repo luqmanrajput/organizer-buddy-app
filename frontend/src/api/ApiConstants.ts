@@ -17,7 +17,7 @@ export const ApiConstants = {
     },
   },
   USER: {
-    SIGN_UP: "/user/signUp",
+    SIGN_UP: "/user/signup",
     FIND_ALL: "/user",
     DELETE: (userId: number) => {
       return "/user/" + userId;

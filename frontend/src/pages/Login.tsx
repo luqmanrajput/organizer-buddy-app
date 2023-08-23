@@ -44,7 +44,10 @@ const Login = () => {
           {/* @csrf */}
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-normal mb-2" htmlFor="username">
+            <label
+              className="block text-gray-700 text-sm font-normal mb-2"
+              htmlFor="username"
+            >
               Email
             </label>
             <input
@@ -57,7 +60,10 @@ const Login = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-normal mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-normal mb-2"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -71,15 +77,23 @@ const Login = () => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <button onClick={loginApp} className="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700">
+            <button
+              onClick={loginApp}
+              className="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
+            >
               Login
             </button>
-            <a onClick={() => navigate("/signUp")} className="cursor-pointer inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800">
+            <a
+              onClick={() => navigate("/signUp")}
+              className="cursor-pointer inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
+            >
               Sign Up
             </a>
           </div>
         </div>
-        <p className="text-center text-gray-500 text-xs">©2022 Notez. All rights reserved.</p>
+        <p className="text-center text-gray-500 text-xs">
+          ©2022 Notez. All rights reserved.
+        </p>
       </div>
     </div>
   );
